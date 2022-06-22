@@ -1,0 +1,37 @@
+From 176646fa7bb1d6c68bb43d999997d4bc12e16920 Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 29 Jun 2022 08:08:44 -0700
+Subject: [PATCH] Silicon/NXP: LX2160a CEX7: Max out PWM fan at all
+ temperatures
+
+I have a much quieter fan than the default one and the machine sits on
+the ground away from me so I don't mind more aggressive fan usage for
+cooler temperatures.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc b/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc
+index 082a0cb4bf..d69121755c 100644
+--- a/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc
++++ b/Platform/SolidRun/LX2160aCex7/LX2160aCex7.dsc
+@@ -107,9 +107,9 @@
+   gNxpQoriqLsTokenSpaceGuid.PcdTmuActiveTempFull|0xDCC # 80C
+ 
+   # Hex value of PWM Duty, 0 - 255, Value / 255 * 100
+-  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedDefault|0x72 # 45%
+-  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedLow|0x9A     # 60%
+-  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedHigh|0xCC    # 80%
++  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedDefault|0xFF # 100%
++  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedLow|0xFF     # 100%
++  gNxpQoriqLsTokenSpaceGuid.PcdTmuFanSpeedHigh|0xFF    # 100%
+ 
+ !if $(MC_HIGH_MEM) == TRUE                                        # Management Complex loaded at the end of DDR2
+   gNxpQoriqLsTokenSpaceGuid.PcdDpaa2McHighRamSize|0x20000000      # 2GB (must be 512MB aligned)
+
+base-commit: de2ef829e9f69eef255617cb536d13fa03c20dcc
+-- 
+2.37.0
+
