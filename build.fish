@@ -12,11 +12,10 @@ podman build \
     $root/docker/; or return
 
 podman run \
-    --env BUS_SPEED=750 \
+    --env BUS_SPEED=800 \
     --env CLEAN=1 \
     --env DDR_SPEED=3200 \
     --env SOC_SPEED=2200 \
-    --env XMP_PROFILE=1 \
     --interactive \
     --rm \
     --tty \
