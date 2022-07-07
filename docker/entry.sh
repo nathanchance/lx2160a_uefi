@@ -41,7 +41,7 @@ elif [ $1 = "build" ]; then
     echo "Patching build/tianocore/edk2-platforms"
     git config --global user.name "$(id -un)"
     git config --global user.email "$(uname -n)"
-    git -C build/tianocore/edk2-platforms am /work/patches/*
+    git -C build/tianocore/edk2-platforms am /work/patches/edk2-platforms/*
 
     ./runme.sh
 fi
