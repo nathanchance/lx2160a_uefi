@@ -4,7 +4,7 @@ __in_container_msg -h
 or return
 
 set root (status dirname | path resolve)
-set tag (basename $root)
+set tag (path basename $root)
 
 rm -fr $root/images
 
