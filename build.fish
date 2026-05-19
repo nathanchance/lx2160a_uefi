@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
-__in_container_msg -h; or return
+__in_container_msg -h
+or return
 
 set root (status dirname)
 set tag (basename $root)
@@ -9,7 +10,8 @@ rm -fr $root/images
 
 podman build \
     -t $tag \
-    $root/docker/; or return
+    $root/docker/
+or return
 
 podman run \
     --env BUS_SPEED=800 \
