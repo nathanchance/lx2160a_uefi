@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-in_container_msg -h; or return
+__in_container_msg -h; or return
 
 set root (status dirname)
 set tag (basename $root)
