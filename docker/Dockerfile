@@ -1,5 +1,5 @@
 # use debian base
-FROM debian:bullseye-slim
+FROM docker.io/debian:bullseye-slim
 
 # update
 RUN set -e; \
