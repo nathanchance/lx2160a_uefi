@@ -1,0 +1,64 @@
+From 0b1b0a9674e27c858f05436ed92250f4498245cf Mon Sep 17 00:00:00 2001
+From: Cole <crobinso@redhat.com>
+Date: Sat, 24 Jul 2021 04:02:27 +0800
+Subject: [PATCH] python: Replace distutils.utils.split_quotes with shlex.split
+
+distutils is deprecated and may be removed in python 3.12.
+Use shlex.split which has been around since python 2.3.
+
+shlex.split does not split on all the ASCII control characters that
+split_quoted will[1], but for edk2 usage I don't think that matters.
+
+[1] https://stackoverflow.com/questions/54999301/what-is-the-difference-between-distutils-util-split-quoted-and-shlex-split
+
+Signed-off-by: Cole Robinson <crobinso@redhat.com>
+Reviewed-by: Bob Feng <bob.c.feng@intel.com>
+---
+ BaseTools/Source/Python/AutoGen/UniClassObject.py     | 4 ++--
+ BaseTools/Source/Python/UPT/Library/UniClassObject.py | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/BaseTools/Source/Python/AutoGen/UniClassObject.py b/BaseTools/Source/Python/AutoGen/UniClassObject.py
+index 883c2356e0ca..b16330e36825 100644
+--- a/BaseTools/Source/Python/AutoGen/UniClassObject.py
++++ b/BaseTools/Source/Python/AutoGen/UniClassObject.py
+@@ -12,7 +12,7 @@
+ #
+ from __future__ import print_function
+ import Common.LongFilePathOs as os, codecs, re
+-import distutils.util
++import shlex
+ import Common.EdkLogger as EdkLogger
+ from io import BytesIO
+ from Common.BuildToolError import *
+@@ -233,7 +233,7 @@ def __init__(self, FileList = [], IsCompatibleMode = False, IncludePathList = []
+     # Get Language definition
+     #
+     def GetLangDef(self, File, Line):
+-        Lang = distutils.util.split_quoted((Line.split(u"//")[0]))
++        Lang = shlex.split(Line.split(u"//")[0])
+         if len(Lang) != 3:
+             try:
+                 FileIn = UniFileClassObject.OpenUniFile(LongFilePath(File.Path))
+diff --git a/BaseTools/Source/Python/UPT/Library/UniClassObject.py b/BaseTools/Source/Python/UPT/Library/UniClassObject.py
+index d25f30014677..8c44dc225277 100644
+--- a/BaseTools/Source/Python/UPT/Library/UniClassObject.py
++++ b/BaseTools/Source/Python/UPT/Library/UniClassObject.py
+@@ -14,7 +14,7 @@
+ # Import Modules
+ #
+ import os, codecs, re
+-import distutils.util
++import shlex
+ from Logger import ToolError
+ from Logger import Log as EdkLogger
+ from Logger import StringTable as ST
+@@ -320,7 +320,7 @@ def __init__(self, FileList = None, IsCompatibleMode = False, IncludePathList =
+     # Get Language definition
+     #
+     def GetLangDef(self, File, Line):
+-        Lang = distutils.util.split_quoted((Line.split(u"//")[0]))
++        Lang = shlex.split(Line.split(u"//")[0])
+         if len(Lang) != 3:
+             try:
+                 FileIn = codecs.open(File.Path, mode='rb', encoding='utf_8').readlines()

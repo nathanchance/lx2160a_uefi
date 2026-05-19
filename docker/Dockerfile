@@ -1,5 +1,5 @@
 # use debian base
-FROM docker.io/debian:bullseye-slim
+FROM docker.io/debian:trixie-slim
 
 # update
 RUN set -e; \
@@ -10,9 +10,9 @@ RUN set -e; \
 RUN apt-get update ; apt-get -y --no-install-recommends install \
 	wget make acpica-tools device-tree-compiler xz-utils \
 	sudo git gettext-base uuid-dev bc gcc g++ python3 \ 
-	libc6-dev libssl-dev python3-distutils ca-certificates
+	libc6-dev libssl-dev ca-certificates
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.13 1
 
 # build environment
 ARG ddr=2400

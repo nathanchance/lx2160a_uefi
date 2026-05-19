@@ -38,10 +38,20 @@ elif [ $1 = "build" ]; then
     echo "Performing SW Build"
     INITIALIZE=1 ./runme.sh
 
-    echo "Patching build/tianocore/edk2-platforms"
     git config --global user.name "$(id -un)"
     git config --global user.email "$(uname -n)"
-    git -C build/tianocore/edk2-platforms am /work/patches/edk2-platforms/*
+
+    echo "Patching build/tianocore/edk2"
+    git -C build/tianocore/edk2 reset --hard
+    git -C build/tianocore/edk2 apply -3v /work/patches/edk2/* || exit
+
+    echo "Patching build/tianocore/edk2-platforms"
+    git -C build/tianocore/edk2-platforms reset --hard
+    git -C build/tianocore/edk2-platforms apply -3v /work/patches/edk2-platforms/* || exit
+
+    echo "Patching build/tianocore/edk2/BaseTools/Source/C/BrotliCompress"
+    git -C build/tianocore/edk2/BaseTools/Source/C/BrotliCompress/brotli reset --hard
+    git -C build/tianocore/edk2/BaseTools/Source/C/BrotliCompress/brotli apply -3v /work/patches/brotli/* || exit
 
     ./runme.sh
 fi

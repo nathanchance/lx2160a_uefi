@@ -1,0 +1,33 @@
+From fc50df0d8eb5331b6641daeedd7f05ae75014ece Mon Sep 17 00:00:00 2001
+From: Cole <crobinso@redhat.com>
+Date: Sat, 24 Jul 2021 04:02:28 +0800
+Subject: [PATCH] BaseTools: Drop check for distutils.utils
+
+distutils.utils is no longer used anywhere, so this check can
+be dropped.
+
+Signed-off-by: Cole Robinson <crobinso@redhat.com>
+Reviewed-by: Bob Feng <bob.c.feng@intel.com>
+Reviewed-by: Yuwei Chen <yuwei.chen@intel.com>
+---
+ BaseTools/Tests/RunTests.py | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/BaseTools/Tests/RunTests.py b/BaseTools/Tests/RunTests.py
+index 81af736cd8cf..934683a44654 100644
+--- a/BaseTools/Tests/RunTests.py
++++ b/BaseTools/Tests/RunTests.py
+@@ -13,13 +13,6 @@
+ import sys
+ import unittest
+ 
+-try:
+-    import distutils.util
+-except ModuleNotFoundError:
+-    sys.exit('''
+-Python reported: "No module named 'distutils.util"
+-''')
+-
+ import TestTools
+ 
+ def GetCTestSuite():
